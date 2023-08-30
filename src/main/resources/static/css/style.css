@@ -49,8 +49,8 @@ header{
 }
 
 .item img {
-    width: 70%;
-    height: auto;
+    width: 150px;
+    height: 200px;
     border: 1px solid black;
 }
 

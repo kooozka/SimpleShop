@@ -1,23 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <title>MyShop</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-<header>
-  <span class="title">Tennis shop</span>
-
-  <a href="" class="cart-ico">
-    <div>
-      <span>Cart</span>
-      <span>(0)</span>
-      <span>0</span>
-      <span>zł</span>
-    </div>
-  </a>
-</header>
+<header th:replace="fragments/header :: shopHeader"></header>
 
 <div class="main-content">
 
