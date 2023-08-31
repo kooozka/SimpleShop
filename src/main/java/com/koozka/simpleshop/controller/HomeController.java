@@ -1,40 +1,31 @@
 package com.koozka.simpleshop.controller;
 
-import com.koozka.simpleshop.Cart;
-import com.koozka.simpleshop.model.Item;
-import com.koozka.simpleshop.repository.ItemRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.koozka.simpleshop.service.CartService;
 
 @Controller
 public class HomeController {
-    private final ItemRepository itemRepository;
-    private final Cart cart;
+    private final CartService cartService;
 
     @Autowired
-    public HomeController(ItemRepository itemRepository, Cart cart) {
-        this.itemRepository = itemRepository;
-        this.cart = cart;
+    public HomeController(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("items", cartService.getAllItems());
         return "home";
     }
 
     @GetMapping("/add/{itemId}")
-    public String addItemToCart(@PathVariable("itemId") int itemId, Model model) {
-        itemRepository.findById(itemId)
-                .ifPresent(item -> cart.addItem(item));
-        model.addAttribute("items", itemRepository.findAll());
+    public String addItemToCart(@PathVariable("itemId") Integer itemId, Model model) {
+        cartService.addItemToCart(itemId);
+        model.addAttribute("items", cartService.getAllItems());
         return "home";
     }
 }

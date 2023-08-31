@@ -21,26 +21,26 @@
         <th>Total</th>
         <th style="width: 30px;"></th>
       </tr>
-      <tr>
+      <tr th:each="cartItem: ${@cart.cartItems}">
         <td>1</td>
         <td>
-          <img src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Pencil-DRAWING-%E2%80%93-STEP-10.jpg">
+          <img th:src="@{${cartItem.item.imgUrl}}">
         </td>
-        <td>Tennis Racquet</td>
+        <td th:text="${cartItem.item.name}"></td>
         <td style="display: flex; padding-top: 10px">
-          <a class="mbtn" href="">-</a>
-          <p>1</p>
-          <a class="mbtn" href="">+</a>
+          <a class="mbtn" th:href="@{'/order/decrease/' + ${cartItem.item.id}}">-</a>
+          <p th:text="${cartItem.counter}"></p>
+          <a class="mbtn" th:href="@{'/order/increase/' + ${cartItem.item.id}}">+</a>
         </td>
-        <td>2.50</td>
+        <td th:text="${cartItem.price}"></td>
         <td>
-          <a class="mbtn" href="">X</a>
+          <a class="mbtn" th:href="@{'/order/remove/' + ${cartItem.item.id}}">X</a>
         </td>
       </tr>
     </table>
 
     <div class="summary">
-      <p><span>Total: </span><span>10</span>zł</p>
+      <p><span>Total: </span><span th:text="${@cart.sum}">10</span>zł</p>
     </div>
     <a href="" class="add-btn">Continue</a>
   </div>

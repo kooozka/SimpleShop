@@ -28,17 +28,22 @@ public class Cart {
         sum = sum.add(item.getPrice());
     }
 
-    public void removeItem(Item item) {
+    public void decreaseItem(Item item) {
         Optional<CartItem> oCartItem = getCartItemByItem(item);
         if (oCartItem.isPresent()) {
             CartItem cartItem = oCartItem.get();
             cartItem.decreaseCounter();
             if (cartItem.hasZeroItems()) {
-                cartItems.remove(cartItem);
+                cartItems.removeIf(i -> i.getItem().getId() == item.getId());
             }
         }
         counter--;
-        sum.subtract(item.getPrice());
+        sum = sum.subtract(item.getPrice());
+    }
+
+    public void removeAllItems(Item item) {
+        cartItems.removeIf(i -> i.getItem().getId() == item.getId());
+        recalculateCart();
     }
 
     private Optional<CartItem> getCartItemByItem(Item item) {
@@ -47,11 +52,11 @@ public class Cart {
                 .findFirst();
     }
 
-    /*
-    private void recalculate() {
+
+    private void recalculateCart() {
         sum = cartItems.stream().map(cartItem -> cartItem.getPrice())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         counter = cartItems.stream().mapToInt(cartItem -> cartItem.getCounter())
                 .reduce(0, Integer::sum);
-    }*/
+    }
 }

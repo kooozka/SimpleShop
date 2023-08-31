@@ -3,7 +3,7 @@
 <body>
 <header th:fragment="shopHeader">
   <span class="title">Tennis Shop</span>
-  <a href="" class="cart-ico">
+  <a th:href="@{/order/cart}" class="cart-ico">
     <div>
       <span>Cart</span>
       <span th:text="'(' + ${@cart.counter} + ')'"></span>
