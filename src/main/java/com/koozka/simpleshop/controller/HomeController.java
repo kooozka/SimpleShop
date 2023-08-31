@@ -1,5 +1,6 @@
 package com.koozka.simpleshop.controller;
 
+import com.koozka.simpleshop.Cart;
 import com.koozka.simpleshop.model.Item;
 import com.koozka.simpleshop.repository.ItemRepository;
 import jakarta.servlet.http.HttpSession;
@@ -11,15 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomeController {
     private final ItemRepository itemRepository;
+    private final Cart cart;
 
     @Autowired
-    public HomeController(ItemRepository itemRepository) {
+    public HomeController(ItemRepository itemRepository, Cart cart) {
         this.itemRepository = itemRepository;
+        this.cart = cart;
     }
 
     @GetMapping("/")
@@ -29,23 +31,10 @@ public class HomeController {
     }
 
     @GetMapping("/add/{itemId}")
-    public String addItemToCart(@PathVariable("itemId") int itemId, Model model, HttpSession session) {
-        List<Item> cart = getSessionCart(session);
+    public String addItemToCart(@PathVariable("itemId") int itemId, Model model) {
         itemRepository.findById(itemId)
-                .ifPresent(item -> {
-                    cart.add(item);
-                    session.setAttribute("cart", cart);
-                });
+                .ifPresent(item -> cart.addItem(item));
         model.addAttribute("items", itemRepository.findAll());
         return "home";
-    }
-
-    private List<Item> getSessionCart(HttpSession session) {
-        @SuppressWarnings("unchecked")
-        List<Item> cart = (List<Item>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
-        return cart;
     }
 }
