@@ -11,27 +11,27 @@
 <div class="main-content">
 
   <table cellspacing="0" style="border: 0px">
-    <tr>
-      <td>1</td>
+    <tr th:each="cartItem,cartItemStat: ${@cart.cartItems}">
+      <td th:text="${cartItemStat.index + 1}"></td>
       <td>
-        <img src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Pencil-DRAWING-%E2%80%93-STEP-10.jpg">
+        <img th:src="@{${cartItem.item.imgUrl}}">
       </td>
-      <td></td>
+      <td th:text="${cartItem.item.name}"></td>
       <td style="display: flex; padding-top: 10px">
-        <p>1</p>
+        <p th:text="${cartItem.counter}"></p>
       </td>
-      <td>2</td>
+      <td th:text="${cartItem.price}"></td>
 
     </tr>
   </table>
 
   <div class="summary">
-    <p><span>Total</span><span>10</span>zł</p>
+    <p><span>Total</span><span th:text="${@cart.sum}"></span>zł</p>
   </div>
 
   <div class="summary">
 
-    <form>
+    <form th:action="@{/order/saveOrder}" method="post">
       <label>Name</label>
       <input type="text" name="firstName" required>
       <label>Surname</label>

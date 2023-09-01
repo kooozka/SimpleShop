@@ -42,7 +42,7 @@
     <div class="summary">
       <p><span>Total: </span><span th:text="${@cart.sum}">10</span>zł</p>
     </div>
-    <a href="" class="add-btn">Continue</a>
+    <a th:href="@{/order/summary}" class="add-btn">Continue</a>
   </div>
 </div>
 </body>

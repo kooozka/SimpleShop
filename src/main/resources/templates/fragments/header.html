@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 <header th:fragment="shopHeader">
-  <span class="title">Tennis Shop</span>
+<!--  <span class="title">Tennis Shop</span>-->
+  <a th:href="@{/}" class="home-btn">Sport Shop</a>
   <a th:href="@{/order/cart}" class="cart-ico">
     <div>
       <span>Cart</span>
