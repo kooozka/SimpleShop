@@ -46,6 +46,12 @@ public class Cart {
         recalculateCart();
     }
 
+    public void clearCart() {
+        cartItems.clear();
+        counter = 0;
+        sum = BigDecimal.ZERO;
+    }
+
     private Optional<CartItem> getCartItemByItem(Item item) {
         return cartItems.stream()
                 .filter(cartItem -> cartItem.idEquals(item))
