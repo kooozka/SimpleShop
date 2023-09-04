@@ -8,6 +8,18 @@
 <body>
     <header th:replace="fragments/header :: shopHeader"></header>
 
+    <form action="/filter" method="get">
+        <label>Choose discipline</label>
+        <label>
+            <select id="discipline" name="discipline">
+                <option th:each="discipline: ${disciplines}"
+                        th:value="${discipline}"
+                        th:text="${discipline}">
+                </option>
+            </select>
+            <button type="submit">Filter</button>
+        </label>
+    </form>
     <div class="main-content">
         <div class="item" th:each="item: ${items}">
             <p class="item-name" th:text="${item.name}"></p>
